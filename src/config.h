@@ -25,8 +25,8 @@ const byte right_motor_fwd = 8; // Input 2
 const byte ir_recv_signal = 12; // Signal pin
 const byte ir_recv_rescue = 0;  // "Rescue" button code
 
-// Servo Motor
-// -----------
-const byte servo_pin = A2;
+// SG90 Servo Motor
+// ----------------
+const byte servo_pin = A2; // Control (PWM)
 
 #endif
