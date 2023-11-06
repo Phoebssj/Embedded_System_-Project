@@ -1,0 +1,2 @@
+- Don't use a speed/duty cycle less than 100 for the motors.
+  According to Prof. Allen, the motors will "whine" and not move.
