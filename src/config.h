@@ -1,5 +1,4 @@
 // The central file for assigning pins and configuring the robot's behavior.
-// TODO: Determine which pin the servo motor uses.
 // TODO: Pick a remote rescue button.
 #ifndef ESP_CONFIG_H
 #define ESP_CONFIG_H
@@ -28,6 +27,6 @@ const byte ir_recv_rescue = 0;  // "Rescue" button code
 
 // Servo Motor
 // -----------
-const byte servo_pin = 0;
+const byte servo_pin = A2;
 
 #endif
