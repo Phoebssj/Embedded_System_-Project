@@ -1,4 +1,5 @@
 #include <HardwareSerial.h>
+#include "config.h"
 
 // Explicitly declare `Serial` to get nice editor suggestions.
 extern HardwareSerial Serial;
