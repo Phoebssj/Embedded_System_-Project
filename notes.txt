@@ -1,2 +1,6 @@
 - Don't use a speed/duty cycle less than 100 for the motors.
   According to Prof. Allen, the motors will "whine" and not move.
+- Course is 28 inches wide.
+- Robot is 7 inches wide.
+- Ultrasonic sensor can "see" around 30 degrees.
+  - Only accurate in the center 10 degrees.
