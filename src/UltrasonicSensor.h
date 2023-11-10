@@ -5,6 +5,9 @@
 
 class UltrasonicSensor {
 public:
+  // Default initialize the sensor without changing any pin modes.
+  UltrasonicSensor();
+
   // Initialize a three-pin ultrasonic sensor.
   UltrasonicSensor(byte signal_pin);
 
@@ -22,8 +25,8 @@ public:
   double measure_distance_cm() const;
 
 private:
-  byte trigger_pin;
-  byte echo_pin;
+  byte trigger_pin = 0;
+  byte echo_pin = 0;
 };
 
 #endif

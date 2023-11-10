@@ -8,6 +8,9 @@ constexpr double inv_sound_us_per_in = 74.0;
 //     343.3 m/s = 0.03433 cm/µs -> 29.1 µs/cm
 constexpr double inv_sound_us_per_cm = 29.1;
 
+// Default initialize the sensor without changing any pin modes.
+UltrasonicSensor::UltrasonicSensor() = default;
+
 // Initialize a three-pin ultrasonic sensor.
 UltrasonicSensor::UltrasonicSensor(byte signal_pin)
   : UltrasonicSensor{ signal_pin, signal_pin }
