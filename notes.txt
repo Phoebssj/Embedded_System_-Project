@@ -4,6 +4,12 @@
 - Robot is 7 inches wide.
 - Ultrasonic sensor can "see" around 30 degrees.
   - Only accurate in the center 10 degrees.
+- We can safely assume that the robot will:
+  - start inside the walls
+  - start facing forward toward the goal
+- delay()/delayMicroseconds() use Timer 0.
+- Servo uses Timer 1.
+- Remote uses Timer 2.
 
               Servo Pins
 
