@@ -14,11 +14,4 @@ void setup() {
 }
 
 void loop() {
-  Serial.print(us.measure_distance());
-  Serial.println(" in");
-
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(500);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(500);
 }
