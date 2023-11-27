@@ -16,12 +16,13 @@ public:
 
   // Measure the time it took for an echo to bounce off of something,
   // in microseconds. This is half the round-trip time.
+  // Returns zero if the function timed out.
   unsigned long measure_time() const;
 
-  // Return the measured distance in inches.
+  // Return the measured distance in inches (or zero on timeout).
   double measure_distance() const;
 
-  // Return the measured distance in centimeters.
+  // Return the measured distance in centimeters (or zero on timeout).
   double measure_distance_cm() const;
 
 private:

@@ -24,6 +24,7 @@ UltrasonicSensor::UltrasonicSensor(byte trigger_pin, byte echo_pin)
 
 // Measure the time it took for an echo to bounce off of something,
 // in microseconds. This is half the round-trip time.
+// Returns zero if the function timed out.
 unsigned long UltrasonicSensor::measure_time() const {
   // We want to detect objects up to 13 feet away.
   const unsigned long max_distance_ft = 13;
@@ -54,22 +55,29 @@ unsigned long UltrasonicSensor::measure_time() const {
   // 3. Return the length of the pulse, which is how long it took
   //    the echo pin to return to low (in microseconds).
   // Timeout after `max_duration_us`.
+  // NOTE: The Arduino documentation is misleading. The timeout includes
+  // waiting for the previous pulse to end, the next pulse to start, and the
+  // next pulse to end [Source: 'wiring_pulse.S' in ArduinoCore-avr repository].
   pinMode(echo_pin, INPUT);
   unsigned long duration = pulseIn(echo_pin, HIGH, max_duration_us);
 
   // Now we can safely re-enable interrupts.
   interrupts();
 
+  if (duration == 0)
+    return 0; // Timeout
+
   // Divide the round-trip time by two to get the one-way time.
-  return duration / 2;
+  // Round up to avoid returning zero, which would indicate timeout.
+  return (duration + 1) / 2;
 }
 
-// Return the measured distance in inches.
+// Return the measured distance in inches (or zero on timeout).
 double UltrasonicSensor::measure_distance() const {
   return measure_time() / inv_sound_us_per_in;
 }
 
-// Return the measured distance in centimeters.
+// Return the measured distance in centimeters (or zero on timeout).
 double UltrasonicSensor::measure_distance_cm() const {
   return measure_time() / inv_sound_us_per_cm;
 }
