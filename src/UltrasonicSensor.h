@@ -3,6 +3,12 @@
 
 #include <Arduino.h>
 
+// Convert duration in microseconds to distance in inches.
+double ultrasonic_convert(unsigned long duration);
+
+// Convert duration in microseconds to distance in centimeters.
+double ultrasonic_convert_cm(unsigned long duration);
+
 class UltrasonicSensor {
 public:
   // Default initialize the sensor without changing any pin modes.

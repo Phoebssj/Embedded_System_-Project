@@ -8,6 +8,18 @@ constexpr double inv_sound_us_per_in = 74.0;
 //     343.3 m/s = 0.03433 cm/µs -> 29.1 µs/cm
 constexpr double inv_sound_us_per_cm = 29.1;
 
+// Convert duration in microseconds to distance in inches.
+double ultrasonic_convert(unsigned long duration) {
+  if (duration == 0) return 0.0; // Timeout
+  return duration / inv_sound_us_per_in;
+}
+
+// Convert duration in microseconds to distance in centimeters.
+double ultrasonic_convert_cm(unsigned long duration) {
+  if (duration == 0) return 0.0; // Timeout
+  return duration / inv_sound_us_per_cm;
+}
+
 // Default initialize the sensor without changing any pin modes.
 UltrasonicSensor::UltrasonicSensor() = default;
 
@@ -74,10 +86,10 @@ unsigned long UltrasonicSensor::measure_time() const {
 
 // Return the measured distance in inches (or zero on timeout).
 double UltrasonicSensor::measure_distance() const {
-  return measure_time() / inv_sound_us_per_in;
+  return ultrasonic_convert(measure_time());
 }
 
 // Return the measured distance in centimeters (or zero on timeout).
 double UltrasonicSensor::measure_distance_cm() const {
-  return measure_time() / inv_sound_us_per_cm;
+  return ultrasonic_convert_cm(measure_time());
 }
