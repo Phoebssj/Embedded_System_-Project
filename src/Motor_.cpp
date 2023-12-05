@@ -1,3 +1,5 @@
+#include "Motor_.h"
+
  Motor:: Motor(){
     pin_1 = 0;
     pin_2 = 0;
@@ -17,7 +19,7 @@
     pinMode(enable_, OUTPUT);
 
 
- };
+ }
 
    // Time to move
 

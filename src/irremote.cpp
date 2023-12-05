@@ -4,10 +4,7 @@
 //
 // ------------------------------------------------------------
 
-
-//#include "irremote_config.h" Commented out the ir configs as the constants are now in the irremote.h header file
 #include "irremote.h"
-#include <IRremote.h>
 
 
 
@@ -32,7 +29,8 @@ switch(rslt_){
 
     //I only did it for 5 I plan to do the rest later
 
-    };
+    }
+}
 
   void IRremote_commands::irconfigs(){ //one-time set-up
     IrReceiver.begin(IR_RECEIVE_PIN,true);
@@ -40,9 +38,13 @@ switch(rslt_){
 
 
   // For the irremote to read into the enum
-  ircommand::IRremote_commands readIrcommand(){
+  IRremote_commands::ircommand IRremote_commands::readIrcommand(){
+    ircommand rslt = ir_invalid;
       if(IrReceiver.decode()){
-      rslt = static_cast<ircommand>(IrReceiver.decodedIRData.command); // We want to read the decoded result
+      // We want to read the decoded result
+      rslt = static_cast<ircommand>(IrReceiver.decodedIRData.command);
+      IrReceiver.resume();
       }
 
     return rslt;
+  }

@@ -4,6 +4,11 @@
 //    properties: pin1, pin2, enable, speed
 //    methods: constructors, getter/setter for speed, run
 
+#ifndef MOTOR_FUNCTIONS
+#define MOTOR_FUNCTIONS
+
+#include <Arduino.h>
+
 //configs for DC Motor
 
 
@@ -18,8 +23,6 @@ const int H12EN = 10;
 const int H3A = 5;
 const int H4A = 6;
 const int H34EN = 11;
-#ifndef MOTOR_FUNCTIONS
-#define MOTOR_FUNCTIONS
 
 class Motor{
 private:
@@ -38,6 +41,7 @@ public:
 
   };
 Motor();
+Motor(byte pin1, byte pin2, byte enable);
  //Getter Setters
 int getSpeed(){return spd_;}
 void setSpeed(int speed){spd_ = speed;}
@@ -46,4 +50,6 @@ void setSpeed(int speed){spd_ = speed;}
 void move(Motor::MotorDirection dir);
 
 
- }
+ };
+
+#endif

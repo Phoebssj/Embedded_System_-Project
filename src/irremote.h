@@ -3,22 +3,20 @@
 // Audit 11/28/23
 // ------------------------------------------------------------
 
-//irremote header
-//#include "irremote_config.h"
-#include <IRremote.h>
-#define IR_USE_AVR_TIMER2
-
-//#include <IRremote.h>
-
-// define glboal constants and types (structs/enums)
-const byte IR_RECEIVE_PIN = 4; // Would need to be change to 12 for the signal.
-
 #ifndef IRREMOTE_CONTROLS
 #define IRREMOTE_CONTROLS
 
-class Irremote_commands{
+//irremote header
+#define IR_USE_AVR_TIMER2
+#include <IRremote.hpp>
+
+// define glboal constants and types (structs/enums)
+const byte IR_RECEIVE_PIN = 12;
+
+class IRremote_commands{
   public:
     enum ircommand{
+        ir_invalid = 0,
         power = 0,
         vol_up = 1,
         F_Stop = 2,
@@ -26,7 +24,7 @@ class Irremote_commands{
         ppause = 5,
         goFwd = 6,
         down = 8,
-        vol_- = 9,
+        vol_down = 9,
         up = 10,
         bnt_0 = 12,
         eq = 13,
@@ -44,15 +42,13 @@ class Irremote_commands{
   //====================================================
   //Constructors:
   //=====================================================
-  IRremote_commands();
+  IRremote_commands() {}
   //=======================================================
   //Methods
   //=======================================================
-  void irconfig(){};
-  ircommand readIrcommand(){return rslt;}
+  void irconfigs();
+  ircommand readIrcommand();
   void printcontrol(unsigned int r);
+};
 
-
-
-
-}
+#endif
