@@ -4,6 +4,7 @@
 #include "UltrasonicSensor.h"
 #include "Motor_.h"
 #include "Rover.h"
+#include "irremote.h"
 
 // Explicitly declare `Serial` to get nice editor suggestions.
 extern HardwareSerial Serial;
@@ -26,6 +27,8 @@ void setup() {
   rover = Rover{ us, left_motor, right_motor };
   rover.attach_servo(servo_pin);
   rover.reset();
+
+  IRremote_commands{}.irconfigs();
 }
 
 void loop() {
