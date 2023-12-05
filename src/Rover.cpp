@@ -43,6 +43,14 @@ void Rover::go_forward() {
   right_motor.move(Motor::Forward);
 }
 
+// Turn both motors to go reverse.
+void Rover::go_reverse() {
+  left_motor.setSpeed(150);
+  left_motor.move(Motor::Reverse);
+  right_motor.setSpeed(150);
+  right_motor.move(Motor::Reverse);
+}
+
 // Start turning in the given direction.
 // This function does not block.
 void Rover::turn(Dir dir) {

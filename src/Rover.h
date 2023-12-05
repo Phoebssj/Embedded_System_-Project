@@ -26,6 +26,9 @@ public:
   // Turn both motors to go forward.
   void go_forward();
 
+  // Turn both motors to go in reverse.
+  void go_reverse();
+
   enum class Dir { Left, Right };
 
   // Start turning in the given direction.
