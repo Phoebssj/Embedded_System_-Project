@@ -17,8 +17,8 @@ const byte IR_RECEIVE_PIN = 4; // Would need to be change to 12 for the signal.
 #define IRREMOTE_CONTROLS
 
 class Irremote_commands{
-	public:
-		enum ircommand{
+  public:
+    enum ircommand{
         power = 0,
         vol_up = 1,
         F_Stop = 2,
@@ -38,21 +38,21 @@ class Irremote_commands{
         bnt_5 = 21,
         bnt_6 = 22,
         bnt_7 = 24,
-		    bnt_8 = 25,
+        bnt_8 = 25,
         bnt_9 = 26
-  	};
-	//====================================================
-	//Constructors:
-	//=====================================================
-	IRremote_commands();
-	//=======================================================
-	//Methods
-	//=======================================================	
-	void irconfig(){};
-	ircommand readIrcommand(){return rslt;}
-	void printcontrol(unsigned int r);
-	
+    };
+  //====================================================
+  //Constructors:
+  //=====================================================
+  IRremote_commands();
+  //=======================================================
+  //Methods
+  //=======================================================
+  void irconfig(){};
+  ircommand readIrcommand(){return rslt;}
+  void printcontrol(unsigned int r);
 
-	
-	
+
+
+
 }

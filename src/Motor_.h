@@ -1,4 +1,4 @@
-//DC Motors headers 
+//DC Motors headers
 
 // define class Motor
 //    properties: pin1, pin2, enable, speed
@@ -7,7 +7,7 @@
 //configs for DC Motor
 
 
-//Constants that will be define to be implemented 
+//Constants that will be define to be implemented
 
 //Constants for Left Motor
 const int H1A = 4;
@@ -27,24 +27,23 @@ private:
   byte pin_2;
   byte enable_;
   int spd_; //I'm just gonna leave it at spd for now
-  
-  
+
+
 public:
   enum MotorDirection{
     Stop,
     Forward,
     Reverse
-  
-  
+
+
   };
 Motor();
- //Getter Setters 
+ //Getter Setters
 int getSpeed(){return spd_;}
 void setSpeed(int speed){spd_ = speed;}
 
 //Move Function
 void move(Motor::MotorDirection dir);
-  
-  
- }
 
+
+ }
