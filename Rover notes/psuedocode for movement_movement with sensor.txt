@@ -1,0 +1,65 @@
+Idea code 
+
+Objective: Have the robot move and turn. Given the Abstractions codes.....
+
+Clarifiactions: is the answers all there? 
+				Should I expect that there is a delay per turn? i.e: If I want to turn how long should the delay would be to make a 90 degree turn/ 45 degreee turn or more?
+				How much speed should be applied to make it turm?
+				
+Constraints: Speed and time are dependent on how far it turns
+			 How long would it take to turn, and how much speed it should take?
+	
+Edge Case:
+			 If it needs to turn left: increase the speed on the right motor, decrease the speed on left motor. Then stop.
+			 If it needs to turn right: Increase the speed on the left motor, decrease the speed on the right motor.
+Idea:
+	 So using the dc function we can rotate the robot based on the spd and using the switch case to turn. Then provide a delay to then move forward and can turn again.
+	 
+	 From the edge case,
+	  If it needs to turn left: increase the speed on the right motor, decrease the speed on left motor. Then stop.
+		If it needs to turn right: Increase the speed on the left motor, decrease the speed on the right motor.
+	 
+	 //To turn left
+		right motor will move forward but the speed with be x bigger
+		left motor will move reverse but decrease the speed
+		
+		
+	//To turn right
+		right motor will move reverse but the speed decreases
+		left motor will move forward but the speed increase
+	)
+	 
+	
+
+
+// Inquiry: what if we need to look for a wall?
+	Well the logic to start  (based on the radar site) function (I dont have it defined but) 
+	
+	//Entering the maze
+	we would have to start having the servo check by turing each direction 
+	and pause (providing a delay) in order for the ultra sonic sensor will have an enough time to check the distatnce.
+
+	//check the distance between the wall using the ultra sonic sensor
+	If the distance between the wall and the robot is too close or too far
+		
+		
+		//If too close to the wall
+			
+			right motor will move reverse but the speed decreases
+			left motor will move forward but the speed increase
+			for x amount of seconds.
+			Read measurement again, and continue forward
+		
+		//If too far from the wall
+			right motor will move forward but the speed with be x bigger
+			left motor will move reverse but decrease the speed
+			for x amount of seconds.
+			Read measurement again and continue forward.
+			
+	
+	
+	
+	// The robot is set to a2 which is an analog pin
+	
+	//they use a pwn signal and and there' using voltage 
+		

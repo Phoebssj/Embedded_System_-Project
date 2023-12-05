@@ -1,0 +1,4 @@
+Notes from today: 
+- If hugging the wall, and is out of bounds check if there is an avaliable wall if near by, check if the distance is between ranges, if it is inn ranges start hugging the wall, if not hug the wall and continue to check.
+
+-Changing to manual for the remote usage.--> Office hours
