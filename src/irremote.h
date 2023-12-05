@@ -7,6 +7,8 @@
 #define IRREMOTE_CONTROLS
 
 //irremote header
+// Only include the *declarations* of IRremote library functions.
+#define USE_IRREMOTE_HPP_AS_PLAIN_INCLUDE
 #define IR_USE_AVR_TIMER2
 #include <IRremote.hpp>
 

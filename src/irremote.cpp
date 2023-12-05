@@ -4,6 +4,17 @@
 //
 // ------------------------------------------------------------
 
+// Include the *definitions* of IRremote library functions, i.e., their actual
+// implementations. We must include this before including our own "irremote.h"
+// because <IRremote.hpp> contains a header guard, so attempting to re-include
+// it afterwards would do nothing.
+// NOTE: Make sure to define the same macros, e.g. `IR_USE_AVR_TIMER2`, in both
+// "irremote.h" and "irremote.cpp" to avoid One Definition Rule violations.
+#define IR_USE_AVR_TIMER2
+#include <IRremote.hpp>
+
+// We've already included <IRremote.hpp> once, so including it again in our own
+// header is harmless.
 #include "irremote.h"
 
 
