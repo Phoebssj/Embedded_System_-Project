@@ -15,7 +15,7 @@ extern HardwareSerial Serial;
 Rover rover;
 
 void setup() {
-  Serial.begin(9600);
+  // Serial.begin(9600);
 
   // Initialize each of the components.
   // These can safely be copied into the rover object.
@@ -28,7 +28,7 @@ void setup() {
   rover.attach_servo(servo_pin);
   rover.reset();
 
-  IRremote_commands{}.irconfigs();
+  // IRremote_commands{}.irconfigs();
 }
 
 void loop() {
