@@ -3,7 +3,7 @@
 // Measure distance (in inches) multiple times and return the median.
 // Returns zero if all measurements timed out.
 // Based on: https://bitbucket.org/teckel12/arduino-new-ping/wiki/Home#!timer-median-sketch
-static double measure_median(const UltrasonicSensor& us, byte times = 5);
+static double measure_median(const UltrasonicSensor& us, byte times = 10);
 
 // Return the opposite direction.
 static Rover::Dir opposite_dir(Rover::Dir dir) {
