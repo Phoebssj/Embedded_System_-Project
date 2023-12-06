@@ -5,12 +5,6 @@
 // Based on: https://bitbucket.org/teckel12/arduino-new-ping/wiki/Home#!timer-median-sketch
 static double measure_median(const UltrasonicSensor& us, byte times = 10);
 
-// Return the opposite direction.
-static Rover::Dir opposite_dir(Rover::Dir dir) {
-  using Dir = Rover::Dir;
-  return dir == Dir::Left ? Dir::Right : Dir::Left;
-}
-
 // Default constructor
 Rover::Rover() = default;
 
@@ -97,60 +91,98 @@ void Rover::look(Dir dir, byte angle) {
   servo.write(angle);
 }
 
+// It takes 1.3 seconds or 1,300 milliseconds for the servo to rotate 180 degrees.
+const int servo_delay_180deg_ms = 1300;
+const int servo_delay_90deg_ms = servo_delay_180deg_ms / 2;
+const int servo_delay_45deg_ms = servo_delay_90deg_ms / 2;
+
+// The walls of the course are 28 inches apart.
+const double course_width_in = 28.0;
+
+// A value chosen to represent "large" distances. If the ultrasonic sensor
+// timed out, we assume all obstacles/walls are at least this far away.
+const double timeout_distance = 70.0;
+
 // Reset the state of the rover.
 void Rover::reset() {
   stop();
-  look(hug_dir, 45);  // Initially look 45 degrees, between forward and `hug_dir`.
-  delay(1300);        // 1.3 seconds to rotate the servo AT MOST
+  look(Dir::Left);
+  delay(servo_delay_180deg_ms);
+  // The length of the course is unknown, so guess:
+  avg_ahead_dist = timeout_distance;
+  // The rover begins halfway between the walls.
+  avg_left_dist = course_width_in / 2.0;
+  avg_right_dist = course_width_in / 2.0;
 }
 
 // Run one iteration of the rover's main loop.
 void Rover::run() {
-  // Safe distance between the ultrasonic sensor and the wall
-  const double safe_distance = 7.0;
+  // We can get away waiting 250 ms less since the rover always moves forward
+  // for 250 ms each iteration.
+  delay(servo_delay_180deg_ms - 250);
+  double left_dist = measure_median(us);
 
-  // Take two measurements roughly in the "hug" direction.
-  // The servo should already be rotated 45 degrees.
-  double distance_45deg = measure_median(us);
+  look_ahead();
+  delay(servo_delay_90deg_ms);
+  double ahead_dist = measure_median(us);
 
-  look(hug_dir);  // Rotate the servo to the 90 degrees direction.
-  delay(325);     // 325 ms to rotate 45 degrees (1300 ms / 4 = 325 ms)
+  look(Dir::Right);
+  delay(servo_delay_90deg_ms);
+  double right_dist = measure_median(us);
 
-  double distance = measure_median(us);
+  // Rotate the servo left in the meantime.
+  look(Dir::Left);
 
-  look(hug_dir, 45);  // Rotate back to the 45 degrees direction.
-  delay(325 - 250);   // Moving forward already takes 250 ms; don't waste time.
+  // Consider timeouts to be large distances.
+  if (left_dist == 0.0) left_dist = timeout_distance;
+  if (ahead_dist == 0.0) ahead_dist = timeout_distance;
+  if (right_dist == 0.0) right_dist = timeout_distance;
 
-  if (distance == 0.0 && safe_distance == 0.0) {
-    // If both measurements timed out, give up.
-    return;
-  } else if (distance == 0.0) {
-    // If only the second measurement timed out, use `distance_45deg`.
-    distance = distance_45deg;
-  } else if (distance_45deg != 0.0) {
-    // If both measurements are valid, use the minimum.
-    // It's better to assume that the rover is too close to any walls rather
-    // than assume that the rover is at a safe distance.
-    distance = distance < distance_45deg ? distance : distance_45deg;
-  }
+  // Compute a weighted average to smooth out deviations in measurements over time.
+  // Only average if the measurement didn't timeout.
+  const double weight = 0.2;
+  avg_left_dist = weight * avg_left_dist + (1.0 - weight) * left_dist;
+  avg_ahead_dist = weight * avg_ahead_dist + (1.0 - weight) * ahead_dist;
+  avg_right_dist = weight * avg_right_dist + (1.0 - weight) * right_dist;
 
-  // For debugging purposes:
-  Serial.println(distance);
+  // The rover should not get closer than `unsafe_dist_in` inches to the walls.
+  // This is half of the course width, minus a few inches to provide some leeway.
+  // That means the rover should stay roughly in the middle of the course.
+  const double unsafe_dist_in = course_width_in / 2.0 - 3.0;
 
-  if (distance < safe_distance - 0.5) {
-    // Too close: turn away from wall.
-    turn(opposite_dir(hug_dir));
+  if (avg_left_dist < unsafe_dist_in) {
+    // The rover is too close to the left wall.
+    // Turn slightly right.
+    turn(Dir::Right);
     delay(90);
     stop();
-  } else if (distance > safe_distance + 0.5) {
-    // Too far: turn towards wall.
-    turn(hug_dir);
+  }
+
+  if (avg_right_dist < unsafe_dist_in) {
+    // The rover is too close to the right wall.
+    // Turn slightly left.
+    turn(Dir::Left);
     delay(90);
     stop();
   }
 
-  // Blindly go forward for 250 ms.
-  // TODO: Check that there is no wall directly in front of the rover.
+  if (avg_ahead_dist < unsafe_dist_in) {
+    // There's a wall ahead of us.
+    // Turn in the direction that doesn't have a wall.
+    if (avg_left_dist < avg_right_dist) {
+      // If the left wall is closer, consider the right direction safe.
+      turn_90deg(Dir::Right);
+    } else {
+      // Otherwise consider the left direction safe.
+      turn_90deg(Dir::Left);
+    }
+
+    // Now that we've turned around, our previous measurements are invalid.
+    // So, reset the state of the rover.
+    reset();
+  }
+
+  // It should be safe to move forward a few inches.
   go_forward();
   delay(250);
   stop();

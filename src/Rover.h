@@ -42,9 +42,6 @@ public:
   // Stop both motors.
   void stop();
 
-  // Set the "hug" direction (defaults to `Dir::Left`).
-  void hug(Dir dir) { hug_dir = dir; }
-
   // Rotate the servo to look `angle` degrees in the given direction.
   void look(Dir, byte angle = 90);
 
@@ -62,7 +59,9 @@ private:
   Motor left_motor;
   Motor right_motor;
   Servo servo;
-  Dir hug_dir = Dir::Left;
+  double avg_left_dist = 0.0;
+  double avg_ahead_dist = 0.0;
+  double avg_right_dist = 0.0;
 };
 
 #endif
