@@ -31,9 +31,9 @@ void Rover::detach_servo() {
 
 // Turn both motors to go forward.
 void Rover::go_forward() {
-  left_motor.setSpeed(150);
+  left_motor.setSpeed(185);
   left_motor.move(Motor::Forward);
-  right_motor.setSpeed(150);
+  right_motor.setSpeed(185);
   right_motor.move(Motor::Forward);
 }
 
@@ -184,7 +184,7 @@ void Rover::run() {
 
   // It should be safe to move forward a few inches.
   go_forward();
-  delay(250);
+  delay(500);
   stop();
 }
 
