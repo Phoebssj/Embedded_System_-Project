@@ -122,12 +122,20 @@ void Rover::run() {
   delay(servo_delay_180deg_ms - 250);
   double left_dist = measure_median(us);
 
+  look(Dir::Left, 45);
+  delay(servo_delay_45deg_ms);
+  double mid_left_dist = measure_median(us);
+
   look_ahead();
-  delay(servo_delay_90deg_ms);
+  delay(servo_delay_45deg_ms);
   double ahead_dist = measure_median(us);
 
+  look(Dir::Right, 45);
+  delay(servo_delay_45deg_ms);
+  double mid_right_dist = measure_median(us);
+
   look(Dir::Right);
-  delay(servo_delay_90deg_ms);
+  delay(servo_delay_45deg_ms);
   double right_dist = measure_median(us);
 
   // Rotate the servo left in the meantime.
@@ -135,8 +143,14 @@ void Rover::run() {
 
   // Consider timeouts to be large distances.
   if (left_dist == 0.0) left_dist = timeout_distance;
+  if (mid_left_dist == 0.0) mid_left_dist = timeout_distance;
   if (ahead_dist == 0.0) ahead_dist = timeout_distance;
+  if (mid_right_dist == 0.0) mid_right_dist = timeout_distance;
   if (right_dist == 0.0) right_dist = timeout_distance;
+
+  // Stay safe and use the minimum of mid_{left,right}_dist and {left,right}_dist.
+  left_dist = mid_left_dist < left_dist ? mid_left_dist : left_dist;
+  right_dist = mid_right_dist < right_dist ? mid_right_dist : right_dist;
 
   // Compute a weighted average to smooth out deviations in measurements over time.
   // Only average if the measurement didn't timeout.
