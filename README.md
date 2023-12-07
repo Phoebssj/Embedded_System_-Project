@@ -14,3 +14,10 @@ This project depends on:
 
 - [Servo](https://github.com/arduino-libraries/Servo) 1.2.1
 - [IRremote](https://www.arduino.cc/reference/en/libraries/irremote/) 4.2.0
+
+## Demo
+
+We recorded two videos of our rover (poorly) navigating the course:
+
+- <https://youtu.be/hmFjMOtl9M0>
+- <https://youtu.be/9GhHu_iQgjQ>
