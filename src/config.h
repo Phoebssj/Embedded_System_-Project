@@ -1,5 +1,4 @@
 // The central file for assigning pins and configuring the robot's behavior.
-// TODO: Pick a remote rescue button.
 #ifndef ESP_CONFIG_H
 #define ESP_CONFIG_H
 
@@ -19,11 +18,6 @@ const byte left_motor_fwd = 7; // Input 2
 const byte right_motor_en  = 6; // Enable B (PWM using OC0A, timer 0)
 const byte right_motor_bck = 2; // Input 3
 const byte right_motor_fwd = 9; // Input 4
-
-// 1838 IR Remote Receiver
-// -----------------------
-const byte ir_recv_signal = 12; // Signal pin
-const byte ir_recv_rescue = 0;  // "Rescue" button code
 
 // SG90 Servo Motor
 // ----------------
