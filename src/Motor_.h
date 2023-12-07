@@ -9,21 +9,6 @@
 
 #include <Arduino.h>
 
-//configs for DC Motor
-
-
-//Constants that will be define to be implemented
-
-//Constants for Left Motor
-const int H1A = 4;
-const int H2A = 3;
-const int H12EN = 10;
-
-//Constants for Right Motor
-const int H3A = 5;
-const int H4A = 6;
-const int H34EN = 11;
-
 class Motor{
 private:
   byte pin_1;
